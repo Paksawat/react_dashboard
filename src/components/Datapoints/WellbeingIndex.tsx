@@ -1,16 +1,17 @@
 import CardHeader from '@/components/Common/CardHeader';
-import { RootState } from '@/stores/store';
-import { TiArrowSortedDown } from 'react-icons/ti';
-import { useSelector } from 'react-redux';
-import { useGetWellbeingIndexQuery } from '@/api/apiSlice';
 import EmptyState from '../Common/EmptyState';
-import Loader from '../Common/Loader';
+import MetricCard from '../Common/MetricCard';
+import { Cell, Pie, PieChart } from 'recharts';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/stores/store';
 
-const WellbeingIndex = () => {
-  const company = useSelector((state: RootState) => state.company.company);
+const WellbeingIndex: React.FC = () => {
+  const company = useSelector((state: RootState) => state.company);
   const department = useSelector(
     (state: RootState) => state.company.selectedDepartmentId
   );
+
+  /*
 
   const {
     data: wellbeingData,
@@ -24,114 +25,107 @@ const WellbeingIndex = () => {
     { skip: !company?.id || !department }
   );
 
-  // Debug: Log the query parameters
-  console.log('Wellbeing Query Params:', {
-    companyId: company?.id,
-    departmentId: department,
-    skip: !company?.id || !department,
-  });
-
-  // Debug: Log the API response to understand the structure
-  if (wellbeingData) {
-    console.log('Wellbeing API Response:', wellbeingData);
-  }
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
   if (error) {
     console.error('Wellbeing API Error:', error);
     return (
-      <div className='flex flex-col lg:pb-14'>
+      <div className="flex flex-col lg:pb-14">
         <CardHeader title={'Wellbeing index'} />
         <EmptyState survey={true} />
       </div>
     );
-  }
+  } */
 
-  // Handle case where data might not have the expected structure
-  // Convert decimal score to percentage (e.g., 0.0833 -> 8.33%)
-  const rawScore = wellbeingData?.score ?? null;
-  const indexValue = rawScore !== null ? Math.round(rawScore * 100) : null;
+  const rawScore = company.company?.departments.find(
+    (d) => d.id === department
+  );
+  const indexValue = rawScore?.wellbeing?.score
+    ? Math.round(rawScore.wellbeing.score * 100)
+    : null;
+
+  const filled = indexValue ?? 0;
+  const remaining = 100 - (indexValue ?? 0);
+
+  const dynamicChartData = [
+    { name: 'Filled', value: filled, fill: '#6890FF' },
+    { name: 'Remaining', value: remaining, fill: '#E0E0E0' },
+  ];
 
   return (
-    <div className='flex flex-col lg:pb-14'>
+    <MetricCard>
       <CardHeader
         title={'Wellbeing index'}
         tooltip={
           <>
-            <h4 className='mb-2 font-semibold'>The Wellbeing Index</h4>
-            <p className='mb-4'>
-              Comes from the World Health Organization’s “WHO-5” questionnaire,
-              which is a short, self-administered measure of wellbeing. It
-              consists of five positively worded items that are rated on 6-point
-              Likert scale, ranging from 0 (at no time) to 5 (all of the time).
+            <h4 className="mb-2 font-semibold">The Wellbeing Index</h4>
+            <p className="mb-4">
+              Comes from the World Health Organization’s “WHO-5” questionnaire.
             </p>
-            <p className='mb-4'>
-              The raw scores are transformed to a score from 0 to 100, with
-              lower scores indicating worse well-being. A score of ≤50 indicates
-              poor wellbeing and suggests further investigation into possible
-              symptoms of depression. A score of 28 or below is indicative of
-              depression.
+            <p className="mb-4">
+              Scores range from 0 to 100. Lower scores indicate worse
+              well-being.
             </p>
           </>
         }
       />
-      <div className='flex gap-4 mb-2'>
-        <p className='text-title font-semibold text-sm 3xl:text-lg'>
-          0 <span className='text-body font-normal'> = worst possible</span>
-        </p>
-        <p className='text-title font-semibold text-sm 3xl:text-lg'>
-          100{' '}
-          <span className='text-body font-normal text-sm 3xl:text-lg'>
-            = best possible
-          </span>
-        </p>
-      </div>
-      {/*
-      <LastComparison
-        rising={true}
-        comparing="vs last survey"
-        difference={14}
-      />*/}
-      {indexValue === null && <EmptyState survey={true} />}
-      <div className='bar relative w-auto mx-5 h-6 mt-[2.5rem] lg:mt-[3.5rem]'>
-        {indexValue && (
-          <div
-            className='percentage absolute top-[-2.5rem] flex flex-col items-center 3xl:top-[-3rem]'
-            style={{
-              left: `calc(${Math.min(
-                Math.max(Number(indexValue), 0),
-                100
-              )}% - ${
-                Number(indexValue) === 0
-                  ? 10
-                  : Number(indexValue) === 100
-                  ? 30
-                  : 28
-              }px)`,
-            }}
-          >
-            <p className='text-title text-title-md font-semibold 3xl:text-title-lg'>
-              {indexValue}
-              <span className='text-sm text-gray-600 font-medium 3xl:text-title-sm'>
-                %
-              </span>
+
+      {indexValue === null || indexValue === 0 ? (
+        <EmptyState survey={true} />
+      ) : (
+        <>
+          <div className="flex gap-4 mb-2">
+            <p className="text-title font-semibold text-sm ">
+              0 <span className="text-body font-normal"> = worst possible</span>
             </p>
-            <TiArrowSortedDown className='needle mt-[-8px] text-2xl text-[#2D59FD]' />
+            <p className="text-title font-semibold text-sm ">
+              100{' '}
+              <span className="text-body font-normal"> = best possible</span>
+            </p>
           </div>
-        )}
-        <div className='w-full h-4 bg-[#C8D6FF] relative text-white font-semibold rounded-md leading-4 3xl:h-6'>
-          <p className='ml-2 3xl:text-lg'>0</p>
-          <span className='w-[50%] h-full bg-[#6890FF] block absolute right-0 top-0 rounded-r-md border-l-[1px] border-title border-dashed'></span>
-          <p className='absolute right-2 top-0 3xl:text-lg'>100</p>
-        </div>
-        <p className='text-sm mt-1 place-self-center 3xl:text-lg'>
-          Under 50% indicates poor wellbeing
-        </p>
-      </div>
-    </div>
+          <div className="relative">
+            <PieChart width={290} height={200} style={{ margin: '0 auto' }}>
+              <Pie
+                dataKey="value"
+                startAngle={180}
+                endAngle={0}
+                data={dynamicChartData}
+                cx={140}
+                cy={200}
+                innerRadius={90}
+                outerRadius={145}
+                stroke="none"
+                isAnimationActive={true}
+              >
+                {dynamicChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Pie>
+            </PieChart>
+            <p
+              className="text-title text-title-xl font-semibold absolute"
+              style={{
+                bottom: '0%',
+                left: '51%',
+                transform: 'translate(-50%, -30%)',
+              }}
+            >
+              {indexValue}
+              <span className="text-sm text-gray-600 font-medium">%</span>
+            </p>
+          </div>
+
+          <div className="bar relative w-[calc(100%-4rem)] mx-5 h-6 mt-[2.5rem] mb-4">
+            <div className="w-full h-4 bg-[#C8D6FF] relative text-white font-semibold rounded-md leading-4">
+              <p className="ml-2">0</p>
+              <span className="w-[51.5%] h-full bg-[#6890FF] block absolute right-0 top-0 rounded-r-md border-l-[1px] border-title border-dashed"></span>
+              <p className="absolute right-2 top-0">100</p>
+            </div>
+            <p className="text-sm mt-1 place-self-center mb-4">
+              Under 50% indicates poor wellbeing
+            </p>
+          </div>
+        </>
+      )}
+    </MetricCard>
   );
 };
 

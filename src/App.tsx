@@ -4,108 +4,106 @@ import DefaultLayout from './layout/DefaultLayout';
 import Overview from './pages/Overview';
 import Metrics from './pages/Metrics';
 import NotFound from './pages/NotFound';
-import ProtectedRoute from './components/Common/ProtectedRoute';
 import Settings from './pages/Settings';
 import Unauthorized from './pages/Unauthorized';
 import Companies from './pages/Companies';
 import Survey from './pages/Survey';
 import Consent from './pages/Consent';
 import AuthInitializer from './auth/AuthInitializer';
-import AuthGuard from './components/Common/AuthGuard';
 
 function App() {
   return (
-    <Routes>
-      <Route
-        path='/consent'
-        element={
-          <>
-            <PageTitle title='Consent Form' />
-            <Consent />
-          </>
-        }
-      />
-      <Route
-        path='*'
-        element={
-          <AuthGuard>
-            <AuthInitializer>
+    <>
+      <AuthInitializer>
+        <Routes>
+          <Route
+            path="/consent"
+            element={
+              <>
+                <PageTitle title="Consent Form" />
+                <Consent />
+              </>
+            }
+          />
+          <Route
+            path="*"
+            element={
               <Routes>
                 <Route element={<DefaultLayout />}>
                   <Route
-                    path='/'
-                    element={<Navigate to='/overview' replace />}
+                    path="/"
+                    element={<Navigate to="/overview" replace />}
                   />
                   <Route
-                    path='/overview'
+                    path="/overview"
                     element={
                       <>
-                        <PageTitle title='Hird Dashboard | Overview' />
+                        <PageTitle title="Hird Dashboard | Overview" />
                         <Overview />
                       </>
                     }
                   />
                   <Route
-                    path='/metrics'
+                    path="/metrics"
                     element={
                       <>
-                        <PageTitle title='Hird Dashboard | Metrics' />
+                        <PageTitle title="Hird Dashboard | Metrics" />
                         <Metrics />
                       </>
                     }
                   />
                   <Route
-                    path='/settings'
+                    path="/settings"
                     element={
                       <>
-                        <PageTitle title='Hird Dashboard | Settings' />
+                        <PageTitle title="Hird Dashboard | Settings" />
                         <Settings />
                       </>
                     }
                   />
                   <Route
-                    path='/unauthorized'
+                    path="/unauthorized"
                     element={
                       <>
-                        <PageTitle title='Hird Dashboard | No permission' />
+                        <PageTitle title="Hird Dashboard | No permission" />
                         <Unauthorized />
                       </>
                     }
                   />
                   <Route
-                    path='/companies'
+                    path="/companies"
                     element={
-                      <ProtectedRoute requiredRoles={['2', 'SystemAdmin']}>
-                        <PageTitle title='Admin | companies' />
+                      <>
+                        <PageTitle title="Admin | companies" />
                         <Companies />
-                      </ProtectedRoute>
+                      </>
                     }
                   />
                   <Route
-                    path='/survey'
+                    path="/survey"
                     element={
-                      <ProtectedRoute requiredRoles={['2', 'SystemAdmin']}>
-                        <PageTitle title='Admin | surveys' />
+                      <>
+                        <PageTitle title="Admin | surveys" />
                         <Survey />
-                      </ProtectedRoute>
+                      </>
                     }
                   />
                 </Route>
                 <Route
-                  path='*'
+                  path="*"
                   element={
                     <>
-                      <PageTitle title='Not found' />
+                      <PageTitle title="Not found" />
                       <NotFound />
                     </>
                   }
                 />
               </Routes>
-            </AuthInitializer>
-          </AuthGuard>
-        }
-      />
-    </Routes>
+            }
+          />
+        </Routes>
+      </AuthInitializer>
+    </>
   );
 }
 

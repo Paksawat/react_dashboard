@@ -288,3 +288,7 @@ span.flatpickr-weekday,
     @apply bg-background text-foreground;
   }
 }
+
+.recharts-sector:focus {
+  outline: none;
+}

@@ -18,31 +18,8 @@ import {
 } from '@/types';
 import { RootState } from '@/stores/store';
 
-export const ENV: string | undefined = import.meta.env.VITE_APP_ENV;
-export const HOST: string | undefined = import.meta.env.VITE_APP_API;
-
-if (!ENV) throw new Error('ENV value is missing');
-
-export const isLocalhostMode = ENV === 'localhost' || ENV === 'local';
-
-// If a HOST is provided and we're not in localhost mode, use it; otherwise, use the default localhost port.
-export const RESOLVED_HOST =
-  HOST && !isLocalhostMode ? HOST : 'https://hird-app-prod.azurewebsites.net'; // "localhost:3000";
-
-// In both cases (localhost or not), use "https". If you need different protocols, you can further adjust this.
-export const REST_PROTOCOL = ENV === 'localhost' ? 'http' : 'https';
-export const WEBSOCKET_PROTOCOL = isLocalhostMode ? 'ws' : 'wss';
-
-export const API_BASE_V1 = '/api/v1';
-
-export const REST_API_BASE = `${REST_PROTOCOL}://${RESOLVED_HOST}${
-  !isLocalhostMode ? API_BASE_V1 : ''
-}`;
-export const WS_API_BASE = `${WEBSOCKET_PROTOCOL}://${RESOLVED_HOST}`;
-// Base query with token from Redux
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://hird-app-prod.azurewebsites.net/api/v1',
-  // baseUrl: 'https://localhost:7189/api/v1',
+  baseUrl: 'https://localhost',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
     if (token) {
@@ -72,7 +49,6 @@ export const apiSlice = createApi({
         response.map((c) => ({
           id: c.id,
           name: c.name,
-          logo: c.logo,
           departments: c.departments,
         })),
     }),

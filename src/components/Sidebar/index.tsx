@@ -3,10 +3,12 @@ import { useEffect, useRef } from 'react';
 import SidebarCompany from './SidebarCompany';
 import SidebarLink from './SidebarLink';
 import { BsGridFill, BsFillGearFill } from 'react-icons/bs';
-import Hird from '@/assets/hird_logo.svg';
 import RoleBasedRender from '@/components/Common/RoleBasedRender';
 import { SiLimesurvey } from 'react-icons/si';
 import { BsBuildingFillAdd } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/stores/store';
+import defaultLogo from '@/assets/default-logo.png';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -16,6 +18,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
+  const company = useSelector((state: RootState) => state.company.company);
 
   // close on click outside
   useEffect(() => {
@@ -73,7 +76,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             />
           </svg>
         </button>
+        <div className="bg-black p-2 flex items-center gap-2 mt-2">
+          <img
+            src={defaultLogo}
+            alt={company?.name || 'Company Logo'}
+            className="w-12 rounded-md"
+          />
+          <p className="text-bodydark2 text-title-md font-semibold">
+            {company?.name}
+          </p>
+        </div>
         <SidebarCompany />
+        <span className="block h-[1px] bg-[#3D475B] mt-6"></span>
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
@@ -124,10 +138,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </nav>
         {/* <!-- Sidebar Menu --> */}
       </div>
-      <div className="place-self-center absolute bottom-4 flex border-t-[1px] border-[#5D718E] pt-2">
-        <p className="font-medium text-bodydark2">Powered by:</p>
-        <img className="w-14 ml-2" src={Hird} alt="" />
-      </div>
+      <div className="place-self-center absolute bottom-4 flex border-t-[1px] border-[#5D718E] pt-2"></div>
     </aside>
   );
 };

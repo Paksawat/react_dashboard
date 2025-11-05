@@ -1,22 +1,9 @@
-import { RootState } from "@/stores/store";
-import { useEffect, useState } from "react";
-import { HiMiniChevronUpDown } from "react-icons/hi2";
-import { useDispatch, useSelector } from "react-redux";
-import Loader from "@/components/Common/Loader";
-import { setSelectedDepartment } from "@/api/companySlice";
-
-import hird from "@/assets/hird-logo.jpeg";
-import omnium from "@/assets/omnium-logo.jpg";
-import abacus from "@/assets/abacus-logo.jpg";
-import nordicworkflow from "@/assets/nordic-workflow-logo.jpg";
-import defaultLogo from "@/assets/default-logo.png";
-
-const logo: Record<string, string> = {
-  hird,
-  omnium,
-  abacus,
-  nordicworkflow,
-};
+import { RootState } from '@/stores/store';
+import { useEffect, useState, useRef } from 'react';
+import { HiMiniChevronUpDown } from 'react-icons/hi2';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from '@/components/Common/Loader';
+import { setSelectedDepartment } from '@/api/companySlice';
 
 const SidebarCompany = () => {
   const { company, isLoading, error, selectedDepartmentId } = useSelector(
@@ -24,69 +11,106 @@ const SidebarCompany = () => {
   );
   const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState<string>(
-    selectedDepartmentId || ""
+    selectedDepartmentId || ''
   );
-  const logoSrc =
-    company?.logo && logo[company.logo] ? logo[company.logo] : undefined;
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Initialize default department
   useEffect(() => {
-    if (company && company.departments && company.departments.length > 0) {
-      setSelectedOption(company.departments[0]?.id || "");
-      dispatch(setSelectedDepartment(company.departments[0]?.id || ""));
+    const departments = company?.departments ?? [];
+    if (departments.length > 0) {
+      const firstDepartmentId = departments[0]?.id || '';
+      setSelectedOption(firstDepartmentId);
+      dispatch(setSelectedDepartment(firstDepartmentId));
     }
   }, [company, dispatch]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    setSelectedOption(selectedValue);
-    dispatch(setSelectedDepartment(selectedValue));
+  const handleSelect = (id: string) => {
+    setSelectedOption(id);
+    dispatch(setSelectedDepartment(id));
+    setIsOpen(false);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  if (isLoading) return <Loader />;
+  if (error) return <div>Error: {String(error)}</div>;
+
+  const departments = company?.departments ?? [];
+  const selectedDepartment = departments.find((d) => d.id === selectedOption);
+
   return (
-    <div className="mb-4.5 bg-white p-2">
-      <div className="relative z-20 bg-transparent dark:bg-form-input flex">
-        <img
-          src={logoSrc || defaultLogo}
-          alt={company?.name || "Company Logo"}
-          className="w-12 rounded-md"
-        />
-        <div className="w-full relative">
-          <p className="pl-2 text-slate-500 text-[.9rem] leading-4 pt-1">
+    <div
+      ref={dropdownRef}
+      className="tabSelect p-2 shadow-sm cursor-pointer relative bg-[#303847] m-2 rounded-md transition-all duration-300"
+    >
+      <div
+        className="flex justify-between items-center"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <div>
+          <p className="text-white text-[.9rem] leading-4 pt-1">
             Current department
           </p>
-          {company && company.departments && company.departments.length > 0 ? (
-            <select
-              onChange={handleChange}
-              value={selectedOption}
-              className={`absolute z-20 w-full appearance-none rounded bg-transparent outline-none transition text-title-xsm pl-2 cursor-pointer leading-0 `}
-            >
-              {company.departments.map((department) => (
-                <option
-                  key={department.id}
-                  value={department.id}
-                  className="text-body text-base p-2 ml-2"
-                >
-                  {department.name}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <div className="text-title-xsm pl-2">Not Found</div>
-          )}
+          <p className="text-title-xsm font-medium text-bodydark2 truncate max-w-[160px]">
+            {selectedDepartment ? selectedDepartment.name : 'Not Found'}
+          </p>
         </div>
 
-        <span className="absolute top-1/2 right-0 z-30 -translate-y-1/2">
-          <HiMiniChevronUpDown />
+        <span
+          className={`transition-transform duration-300 text-bodydark2 ${
+            isOpen ? 'rotate-180' : 'rotate-0'
+          }`}
+        >
+          <HiMiniChevronUpDown className="text-lg" />
         </span>
+      </div>
+
+      {/* Dropdown with animation */}
+      <div
+        className={`absolute left-0 top-full mt-1 w-full rounded-md shadow-lg z-30 max-h-60 overflow-y-auto bg-[#303847] 
+          transform transition-all duration-300 ease-in-out origin-top
+          ${
+            isOpen
+              ? 'scale-y-100 opacity-100'
+              : 'scale-y-0 opacity-0 pointer-events-none'
+          }
+        `}
+      >
+        {departments.map((department, index) => (
+          <div
+            key={`${department.id}-${index}`}
+            onClick={() => {
+              if (department.id) handleSelect(department.id);
+            }}
+            className={`px-3 py-2 text-sm text-bodydark2 transition-all duration-200 ease-in-out 
+              hover:bg-[#3b4658] hover:text-white cursor-pointer
+              ${
+                department.id === selectedOption
+                  ? 'font-semibold text-blue-400'
+                  : ''
+              }`}
+          >
+            {department.name}
+          </div>
+        ))}
       </div>
     </div>
   );
 };
+
 export default SidebarCompany;

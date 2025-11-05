@@ -4,7 +4,6 @@ import { MetricsData } from '@/types';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Loader from '@/components/Common/Loader';
-import MetricSingle from '@/components/Datapoints/MetricSingle';
 import GraphMetric from '@/components/Datapoints/GraphMetric';
 
 const Metrics = () => {
@@ -87,13 +86,12 @@ const Metrics = () => {
 
       <div className=" gap-4 flex flex-col md:gap-4 2xl:gap-6 w-full flex-grow 3xl:grid-rows-[200px_300px_400px] ">
         {mappedMetrics &&
-          mappedMetrics.map(([title, value]) => {
+          mappedMetrics.map(([title]) => {
             return (
               <div
                 key={title}
                 className="bg-white rounded-lg shadow-default flex-grow flex w-full h-full  p-4 relative flex-col items-center md:flex-row "
               >
-                <MetricSingle title={title} value={value} />
                 <GraphMetric data={mapData(title)} />
               </div>
             );

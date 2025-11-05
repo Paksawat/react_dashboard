@@ -3,11 +3,15 @@ interface emptyStateProps {
 }
 
 const EmptyState: React.FC<emptyStateProps> = ({ survey }) => {
-  const subtext = survey ? "Awaiting survey results" : "";
+  const subtext = survey ? 'Awaiting survey results' : '';
   return (
-    <div className="w-full flex flex-col justify-around items-center h-full">
-      <h3 className="text-title-md font-medium text-title">No data</h3>
-      <p className="text-gray-500 text-sm font-normal">{subtext}</p>
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="text-center">
+        <h3 className="text-title-md font-medium text-title">No data</h3>
+        {subtext && (
+          <p className="text-gray-500 text-sm font-normal mt-1">{subtext}</p>
+        )}
+      </div>
     </div>
   );
 };

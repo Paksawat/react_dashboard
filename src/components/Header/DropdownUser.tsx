@@ -1,21 +1,14 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import ClickOutside from "@/components/Common/ClickOutside";
-import { IoPersonCircleSharp } from "react-icons/io5";
-import { FiChevronDown } from "react-icons/fi";
-import { useAuth0 } from "@auth0/auth0-react";
-import { RootState } from "@/stores/store";
-import { useSelector } from "react-redux";
-import Loader from "../Common/Loader";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import ClickOutside from '@/components/Common/ClickOutside';
+import { IoPersonCircleSharp } from 'react-icons/io5';
+import { FiChevronDown } from 'react-icons/fi';
+import { RootState } from '@/stores/store';
+import { useSelector } from 'react-redux';
 
 const DropdownUser = () => {
-  const { logout, isLoading } = useAuth0();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useSelector((state: RootState) => state.auth);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -26,7 +19,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right sm:block">
           <span className="block text-base font-medium text-black dark:text-white">
-            {isLoading ? "Fetching..." : user?.name.firstName ?? "Hello"}
+            {user?.name}
           </span>
         </span>
 
@@ -69,11 +62,7 @@ const DropdownUser = () => {
           </ul>
           <button
             className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-meta-1 lg:text-base"
-            onClick={() =>
-              logout({
-                logoutParams: { returnTo: window.location.origin },
-              })
-            }
+            onClick={() => alert('Auth0 disabled for this demo')}
           >
             <svg
               className="fill-current"

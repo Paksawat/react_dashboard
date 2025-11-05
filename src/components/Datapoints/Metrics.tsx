@@ -1,18 +1,18 @@
-import { useGetDepartmentMetricsQuery } from '@/api/apiSlice';
-import { RootState } from '@/stores/store';
-import { MetricsData } from '@/types/metricTypes';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import MetricSingle from './MetricSingle';
-import Loader from '@/components/Common/Loader';
+import { RootState } from '@/stores/store';
 
 const Metrics = () => {
-  const company = useSelector((state: RootState) => state.company.company);
+  const company = useSelector((state: RootState) => state.company);
   const department = useSelector(
     (state: RootState) => state.company.selectedDepartmentId
   );
-  const [metrics, setMetrics] = useState<MetricsData | null>(null);
-  const { data, isLoading, error } = useGetDepartmentMetricsQuery(
+  /*
+  const {
+    data: metrics,
+    isLoading,
+    error,
+  } = useGetDepartmentMetricsQuery(
     {
       companyId: company?.id || '0',
       departmentId: department || '0',
@@ -20,54 +20,29 @@ const Metrics = () => {
     { skip: !company?.id || !department }
   );
 
-  useEffect(() => {
-    if (data) {
-      setMetrics(data);
-    }
-  }, [data]);
+  const isDataLoading = isLoading || !metrics || !!error; */
 
-  if (isLoading) {
-    return <Loader />;
-  }
-  if (error) {
-    return (
-      <>
-        {['focus', 'strss', 'effort'].map((title) => (
-          <div
-            key={title}
-            className='bg-white rounded-lg shadow-default flex-grow'
-          >
-            <MetricSingle title={title} value={0} />
-          </div>
-        ))}
-      </>
-    );
-  }
-  const titleMapping: { [key: string]: string } = {
-    focus: 'focus',
-    calm: 'stress',
-    cognitiveEffort: 'effort',
-  };
+  const dataResult = company.company?.departments.find(
+    (d) => d.id === department
+  );
 
-  const mappedMetrics = metrics
-    ? Object.entries(metrics).map(([key, value]) => {
-        const displayTitle = titleMapping[key] || key;
-        return [displayTitle, value];
-      })
-    : [];
-
+  const mappedMetrics = [
+    { title: 'focus', value: dataResult?.metrics.focus ?? null },
+    { title: 'stress', value: dataResult?.metrics.calm ?? null },
+    { title: 'effort', value: dataResult?.metrics.cognitiveEffort ?? null },
+  ];
   return (
-    <>
+    <div className="flex flex-col sm:flex-row gap-4">
       {mappedMetrics &&
-        mappedMetrics.map(([title, value]) => (
+        mappedMetrics.map(({ title, value }) => (
           <div
             key={title}
-            className='bg-white rounded-lg shadow-default flex-grow'
+            className="bg-white rounded-lg shadow-default flex-grow"
           >
             <MetricSingle title={title} value={value} />
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

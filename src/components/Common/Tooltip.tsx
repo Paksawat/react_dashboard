@@ -1,40 +1,39 @@
-import React, { useState } from "react";
-import { FiInfo } from "react-icons/fi";
+import React from 'react';
+import { FiInfo } from 'react-icons/fi';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
+
 interface TooltipProps {
   tooltip?: React.ReactNode;
 }
 
 const TooltipIcon: React.FC<TooltipProps> = ({ tooltip }) => {
-  const [open, setOpen] = useState(false);
   return (
-    <TooltipProvider delayDuration={0}>
-      <Tooltip open={open}>
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            onClick={() => setOpen(!open)}
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
-            onTouchStart={() => setOpen(!open)}
-            onKeyDown={(e) => {
-              e.preventDefault();
-              void (e.key === "Enter" && setOpen(!open));
-            }}
-          >
-            <FiInfo className="ml-1 text-gray-500" />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent className="relative z-99">
-          <span className="inline-block max-w-80 sm:max-w-125">{tooltip}</span>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button type="button">
+          <FiInfo className="ml-1 text-gray-500" />
+        </button>
+      </DialogTrigger>
+
+      <DialogContent className="absolute z-999999">
+        <DialogHeader>
+          <DialogTitle></DialogTitle>
+          <DialogDescription>{tooltip}</DialogDescription>
+        </DialogHeader>
+
+        <DialogClose className="absolute top-4 right-4">
+          <span className="sr-only">Close</span>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
   );
 };
 

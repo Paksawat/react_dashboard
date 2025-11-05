@@ -1,149 +1,90 @@
 {
-  "hird": [
+  "Tech Firm": [
     {
-      "company_id": "22c81ebd-993f-471f-acfc-1b4079ee743b",
+      "id": "22c81ebd-993f-471f-acfc-1b4079ee743b",
       "companyColor": "#39D6B9",
-      "companyLogoUrl": "",
-      "survey_date": "07/04/2025",
-      "wellbeing_index": [
+      "name": "Tech Firm",
+      "departments": [
         {
-          "percentage": 58.7,
-          "percentage_change": -1.5
-        }
-      ],
-      "nps_current_score": 56,
-      "life_satisfactory": 56,
-      "employer_nps": [
-        { "label": "Promoters", "value": 67 },
-        { "label": "Passive", "value": 22 },
-        { "label": "Detractors", "value": 11 }
-      ],
-      "stressors": [
-        { "type": "stressor", "label": "Energy Levels", "value": 29 },
-        { "type": "stressor", "label": "Work Load", "value": 22 },
-        { "type": "stressor", "label": "Confidence", "value": 23 },
-        { "type": "stressor", "label": "Mood", "value": 26 },
+          "id": "001-001",
+          "name": "Overview",
+          "enps": {
+            "detractors": 0.2,
+            "passives": 0.25,
+            "promoters": 0.55,
+            "score": 35
+          },
+          "health_contributors": {
+            "energy": 0.2,
+            "workload": 0.3,
+            "confidence": 0.4,
+            "mood": 0.1
+          },
+          "life_satisfactory": {
+            "score": 7.5
+          },
+          "metrics": {
+            "calm": 52.81,
+            "cognitiveEffort": 51.12,
+            "focus": 49.12
+          },
+          "wellbeing": {
+            "score": 0.73
+          }
+        },
         {
-          "type": "advice",
-          "header": "The highest percentage is Energy at 29",
-          "message": "Your team is drained. Reduce unnecessary meetings, ensure realistic deadlines, and encourage real lunch breaks. Energy follows balance - help them get it back."
-        }
-      ],
-      "summary": [
+          "id": "001-002",
+          "name": "R&D",
+          "enps": {
+            "detractors": 0.2,
+            "passives": 0.25,
+            "promoters": 0.55,
+            "score": 35
+          },
+          "health_contributors": {
+            "energy": 0.3,
+            "workload": 0.2,
+            "confidence": 0.1,
+            "mood": 0.4
+          },
+          "life_satisfactory": {
+            "score": 6.2
+          },
+          "metrics": {
+            "calm": 42.52,
+            "cognitiveEffort": 57.23,
+            "focus": 56.57
+          },
+          "wellbeing": {
+            "score": 0.64
+          }
+        },
         {
-          "summary": "Based on the trends in subjective survey responses, the overall mental wellbeing of employees during the selected time period appears moderately positive, with a WHO-5 Wellbeing Index score of 58.7%. Most employees report feeling engaged and emotionally stable, though there are noticeable fluctuations in mood, energy, and personal confidence. The adjusted eNPS score of 56 reflects healthy advocacy levels, though not as high as in the previous period. Notably, emotional wellbeing indicators such as calmness and interest in daily tasks remain fairly strong, suggesting a work culture that supports mental presence. However, a few low-scoring individuals may be masking deeper struggles, indicating the importance of looking beyond averages.\n\nMajor Strengths Identified:\n\nEmotional Stability & Calmness: Employees reported the highest individual wellbeing percentage for calmness (67%), suggesting effective emotional regulation and a relatively low-stress atmosphere for many.\n\nInterest & Engagement: The interest-related question maintained a solid 58% score, indicating sustained job engagement and intrinsic motivation across teams.\n\nOrganizational Loyalty: With 67% of employees falling into the promoter category in the adjusted eNPS calculation, many are willing to recommend their workplace, a strong sign of workplace culture satisfaction and brand advocacy.\n\nEnergy and Freshness (Mid-range Strength): While not among the top scores, energy and freshness both hovered around 53–58%, indicating stable, if not ideal, levels of physical and mental vitality.\n\nPotential Concerns / Red Flags:\n\nEnergy Depletion: The highest burden in inverted scoring was Energy (29%), revealing that a significant number of employees feel drained or fatigued throughout the week. This is a clear red flag pointing to potential burnout risks.\n\nMood Instability: Mood scored 26% on the inverted scale, suggesting a notable drop in emotional positivity or motivation for several employees. It’s critical to act before this impacts productivity or retention.\n\nConfidence Dip: Confidence also showed a 23% burden, indicating that some employees may be experiencing self-doubt or lack of recognition in their roles.\n\nWellbeing Disparities: A wide range in wellbeing scores—individual percentages ranging from 20% to 76%—indicates uneven employee experience, where a subset is experiencing notably lower wellbeing, possibly hidden behind high averages.\n\nDepartment-Specific Trends:\n\nNo department-specific data was applied in this report. However, if granular data is made available, comparisons against these company-wide averages can uncover localized stress hotspots or high-performing units worth further attention.\n\nComparison to Last Week’s Summary:\n\nSimilarities:\n\nWorkload manageability, emotional calmness, and job engagement remain steady strengths.\n\nOverall wellbeing percentage (now 58.7%) is comparable to last week’s 60%, showing relative stability.\n\neNPS shows continued organizational loyalty, though down from last week's 83% to a still solid 56%.\n\nDifferences:\n\nEnergy and mood issues have intensified slightly, becoming clearer as the highest burden areas.\n\nConfidence dropped more visibly this week, now a more noticeable concern in the wellbeing landscape.\n\nA broader spread in individual wellbeing scores suggests growing disparity in employee experiences, requiring more tailored interventions.\n\nConclusion:\n\nEmployee wellbeing is holding steady, but warning signs are emerging, particularly in energy, mood, and self-confidence. While many employees remain engaged and positive, targeted support is needed for those falling behind. Managers must proactively identify and support these individuals to prevent disengagement and ensure the workplace remains inclusive, motivating, and resilient.",
-          "advice": "Recharge Employee Energy: Reduce unnecessary meetings, encourage real breaks, and evaluate workloads for balance. Introduce “no-meeting zones” or shorter workdays where feasible.\n\nElevate Mood Consistently: Launch light-hearted initiatives like gratitude shoutouts, weekly appreciation posts, or gamified team goals to create more emotional uplift.\n\nBoost Confidence in the Workplace: Initiate peer mentorship programs, offer more constructive feedback, and recognize efforts—especially in public forums or team settings.\n\nAddress Wellbeing Variability: Use pulse surveys or confidential check-ins to catch early signs of distress among lower-scoring individuals, and tailor support accordingly."
-        }
-      ]
-    }
-  ],
-  "omnium improvements": [
-    {
-      "company_id": "eae6c17e-7151-49d2-9bbf-693493860b54",
-      "companyColor": "#004A88",
-      "companyLogoUrl": "",
-      "survey_date": "07/04/2025",
-      "wellbeing_index": [
-        {
-          "percentage": 58.7,
-          "percentage_change": null
-        }
-      ],
-      "nps_current_score": 56,
-      "employer_nps": [
-        { "label": "Promoters", "value": 67 },
-        { "label": "Passive", "value": 22 },
-        { "label": "Detractors", "value": 11 }
-      ],
-      "stressors": [
-        { "type": "stressor", "label": "Energy Levels", "value": 29 },
-        { "type": "stressor", "label": "Work Load", "value": 22 },
-        { "type": "stressor", "label": "Confidence", "value": 23 },
-        { "type": "stressor", "label": "Mood", "value": 26 },
-        {
-          "type": "advice",
-          "header": "The highest percentage is Energy at 29%",
-          "message": "Your team is drained. Reduce unnecessary meetings, ensure realistic deadlines, and encourage real lunch breaks. Energy follows balance—help them get it back. "
-        }
-      ],
-      "summary": [
-        {
-          "summary": "Based on the trends in subjective survey responses, the overall mental wellbeing of employees during the selected time period appears moderately positive, with a WHO-5 Wellbeing Index score of 58.7%. Most employees report feeling engaged and emotionally stable, though there are noticeable fluctuations in mood, energy, and personal confidence. The adjusted eNPS score of 56 reflects healthy advocacy levels, though not as high as in the previous period. Notably, emotional wellbeing indicators such as calmness and interest in daily tasks remain fairly strong, suggesting a work culture that supports mental presence. However, a few low-scoring individuals may be masking deeper struggles, indicating the importance of looking beyond averages.\n\nMajor Strengths Identified:\n\nEmotional Stability & Calmness: Employees reported the highest individual wellbeing percentage for calmness (67%), suggesting effective emotional regulation and a relatively low-stress atmosphere for many.\n\nInterest & Engagement: The interest-related question maintained a solid 58% score, indicating sustained job engagement and intrinsic motivation across teams.\n\nOrganizational Loyalty: With 67% of employees falling into the promoter category in the adjusted eNPS calculation, many are willing to recommend their workplace, a strong sign of workplace culture satisfaction and brand advocacy.\n\nEnergy and Freshness (Mid-range Strength): While not among the top scores, energy and freshness both hovered around 53–58%, indicating stable, if not ideal, levels of physical and mental vitality.\n\nPotential Concerns / Red Flags:\n\nEnergy Depletion: The highest burden in inverted scoring was Energy (29%), revealing that a significant number of employees feel drained or fatigued throughout the week. This is a clear red flag pointing to potential burnout risks.\n\nMood Instability: Mood scored 26% on the inverted scale, suggesting a notable drop in emotional positivity or motivation for several employees. It’s critical to act before this impacts productivity or retention.\n\nConfidence Dip: Confidence also showed a 23% burden, indicating that some employees may be experiencing self-doubt or lack of recognition in their roles.\n\nWellbeing Disparities: A wide range in wellbeing scores—individual percentages ranging from 20% to 76%—indicates uneven employee experience, where a subset is experiencing notably lower wellbeing, possibly hidden behind high averages.\n\nDepartment-Specific Trends:\n\nNo department-specific data was applied in this report. However, if granular data is made available, comparisons against these company-wide averages can uncover localized stress hotspots or high-performing units worth further attention.\n\nComparison to Last Week’s Summary:\n\nSimilarities:\n\nWorkload manageability, emotional calmness, and job engagement remain steady strengths.\n\nOverall wellbeing percentage (now 58.7%) is comparable to last week’s 60%, showing relative stability.\n\neNPS shows continued organizational loyalty, though down from last week's 83% to a still solid 56%.\n\nDifferences:\n\nEnergy and mood issues have intensified slightly, becoming clearer as the highest burden areas.\n\nConfidence dropped more visibly this week, now a more noticeable concern in the wellbeing landscape.\n\nA broader spread in individual wellbeing scores suggests growing disparity in employee experiences, requiring more tailored interventions.\n\nConclusion:\n\nEmployee wellbeing is holding steady, but warning signs are emerging, particularly in energy, mood, and self-confidence. While many employees remain engaged and positive, targeted support is needed for those falling behind. Managers must proactively identify and support these individuals to prevent disengagement and ensure the workplace remains inclusive, motivating, and resilient.",
-          "advice": "Recharge Employee Energy: Reduce unnecessary meetings, encourage real breaks, and evaluate workloads for balance. Introduce “no-meeting zones” or shorter workdays where feasible.\n\nElevate Mood Consistently: Launch light-hearted initiatives like gratitude shoutouts, weekly appreciation posts, or gamified team goals to create more emotional uplift.\n\nBoost Confidence in the Workplace: Initiate peer mentorship programs, offer more constructive feedback, and recognize efforts—especially in public forums or team settings.\n\nAddress Wellbeing Variability: Use pulse surveys or confidential check-ins to catch early signs of distress among lower-scoring individuals, and tailor support accordingly."
-        }
-      ]
-    }
-  ],
-  "nordic workflow": [
-    {
-      "company_id": "612dd611-e9fd-4a51-a770-12ee368f0a8e",
-      "companyColor": "#0c0f66",
-      "companyLogoUrl": "",
-      "survey_date": "",
-      "wellbeing_index": [
-        {
-          "percentage": null,
-          "percentage_change": null
-        }
-      ],
-      "nps_current_score": null,
-      "employer_nps": [
-        { "label": "Promoters", "value": null },
-        { "label": "Passive", "value": null },
-        { "label": "Detractors", "value": null }
-      ],
-      "stressors": [
-        { "type": "stressor", "label": "Energy Levels", "value": null },
-        { "type": "stressor", "label": "Work Load", "value": null },
-        { "type": "stressor", "label": "Confidence", "value": null },
-        { "type": "stressor", "label": "Mood", "value": null },
-        {
-          "type": "",
-          "header": "",
-          "message": ""
-        }
-      ],
-      "summary": [
-        {
-          "summary": "",
-          "advice": ""
-        }
-      ]
-    }
-  ],
-  "abacus medicine": [
-    {
-      "company_id": "33e6a1c1-d792-4978-9e9a-0205a2d6b304",
-      "companyColor": "#1E90B3",
-      "companyLogoUrl": "",
-      "survey_date": "",
-      "wellbeing_index": [
-        {
-          "percentage": null,
-          "percentage_change": null
-        }
-      ],
-      "nps_current_score": null,
-      "employer_nps": [
-        { "label": "Promoters", "value": null },
-        { "label": "Passive", "value": null },
-        { "label": "Detractors", "value": null }
-      ],
-      "stressors": [
-        { "type": "stressor", "label": "Energy Levels", "value": null },
-        { "type": "stressor", "label": "Work Load", "value": null },
-        { "type": "stressor", "label": "Confidence", "value": null },
-        { "type": "stressor", "label": "Mood", "value": null },
-        {
-          "type": "",
-          "header": "",
-          "message": ""
-        }
-      ],
-      "summary": [
-        {
-          "summary": "",
-          "advice": ""
+          "id": "001-003",
+          "name": "Sales",
+          "enps": {
+            "detractors": 0.2,
+            "passives": 0.25,
+            "promoters": 0.55,
+            "score": 35
+          },
+          "health_contributors": {
+            "energy": 0.4,
+            "workload": 0.3,
+            "confidence": 0.1,
+            "mood": 0.2
+          },
+          "life_satisfactory": {
+            "score": 2.3
+          },
+          "metrics": {
+            "calm": 74.81,
+            "cognitiveEffort": 43.53,
+            "focus": 82.31
+          },
+          "wellbeing": {
+            "score": 0.85
+          }
         }
       ]
     }

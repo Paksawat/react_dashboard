@@ -1,7 +1,7 @@
 export interface User {
   id: string;
   email: string;
-  name: NameType;
+  name: string;
   departmentId: string;
   companyId: string;
   role: string[];

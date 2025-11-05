@@ -65,5 +65,5 @@ export interface ENPSResponse {
 }
 
 export interface LifeSatisfactionResponse {
-  score: number;
+  score: number | undefined;
 }

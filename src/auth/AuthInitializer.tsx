@@ -1,93 +1,112 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '@/api/authSlice';
 import { setCompany } from '@/api/companySlice';
-import {
-  useLazyGetCompanyByIdQuery,
-  useLazyGetUserQuery,
-} from '@/api/apiSlice';
 import AuthError from './AuthError';
 import LoaderGlobal from '@/components/Common/LoaderGlobal';
+import data from '@/data.json';
 
 interface AuthInitializerProps {
   children: ReactNode;
 }
 
-// const ALLOWED_ROLES = ['SystemAdmin', 'Manager'];
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  companyId: string;
+  departmentId: string;
+  role: string[];
+}
+export interface Department {
+  id: string;
+  name: string;
+  enps: {
+    detractors: number;
+    passives: number;
+    promoters: number;
+    score: number;
+  };
+  health_contributors: {
+    energy: number;
+    workload: number;
+    confidence: number;
+    mood: number;
+  };
+  life_satisfactory: {
+    score: number;
+  };
+  metrics: {
+    calm: number;
+    cognitiveEffort: number;
+    focus: number;
+  };
+  wellbeing: {
+    score: number;
+  };
+}
+
+export interface Company {
+  id: string;
+  companyColor: string;
+  departments: Department[];
+  name: string;
+}
 
 const AuthInitializer: React.FC<AuthInitializerProps> = ({ children }) => {
-  const { isLoading, error, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
-  const [fetchUser] = useLazyGetUserQuery();
-  const [fetchCompany] = useLazyGetCompanyByIdQuery();
+  const [isLoading, setIsLoading] = useState(true);
   const [userRoleValid, setUserRoleValid] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (isLoading) return;
     const init = async () => {
       try {
-        const token = await getAccessTokenSilently();
-        dispatch(setToken(token));
-        const user = await fetchUser().unwrap();
-        if (user) {
-          dispatch(setUser(user));
+        const mockToken: string = 'mock-local-token';
+        const mockUser: User = {
+          id: 'mock-user-id',
+          name: 'Local Developer',
+          email: 'dev@example.com',
+          companyId: '22c81ebd-993f-471f-acfc-1b4079ee743b',
+          departmentId: '001-001',
+          role: ['Manager'],
+        };
 
-          // const role = Array.isArray(user.role) ? user.role : [user.role];
-          // const isAllowed = role.some((r) => ALLOWED_ROLES.includes(String(r)));
-          // setUserRoleValid(isAllowed);
-          //if (!isAllowed) return;
+        dispatch(setToken(mockToken));
+        dispatch(setUser(mockUser));
+        setUserRoleValid(true);
 
-          // quick fix for user access
-          setUserRoleValid(true);
-
-          if (user.companyId) {
-            try {
-              const company = await fetchCompany(user.companyId).unwrap();
-              dispatch(setCompany(company));
-              document.documentElement.style.setProperty(
-                '--company-color',
-                company.color || null
-              );
-
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (err: any) {
-              if (err?.status === 403) {
-                return;
-              }
-              throw err;
-            }
-          }
+        const company: Company = data['Tech Firm'][0];
+        if (company) {
+          dispatch(setCompany(company));
+          document.documentElement.style.setProperty(
+            '--company-color',
+            company.companyColor || '#39D6B9'
+          );
         }
       } catch (err) {
-        console.error(err);
-        return;
+        console.error('Auth initialization error:', err);
+        setUserRoleValid(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     init();
-  }, [getAccessTokenSilently, fetchUser, fetchCompany, dispatch, isLoading]);
+  }, [dispatch]);
 
   if (isLoading) {
-    return <div>Loading authentication...</div>;
-  }
-
-  if (error) {
-    return <AuthError message={error.message} />;
-  }
-
-  if (userRoleValid === null) {
     return <LoaderGlobal />;
   }
 
   if (userRoleValid === false) {
     return (
       <AuthError
-        message='Access denied'
-        customMessage='You do not have permission to access this application. Please contact your Hird representative'
+        message="Access denied"
+        customMessage="You do not have permission to access this application. Please contact your Hird representative."
       />
     );
   }
+
   return <>{children}</>;
 };
 

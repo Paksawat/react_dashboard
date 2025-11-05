@@ -1,9 +1,9 @@
-import CardHeader from "@/components/Common/CardHeader";
+import CardHeader from '@/components/Common/CardHeader';
 
-import focus from "@/assets/focus.svg";
-import stress from "@/assets/stress.svg";
-import effort from "@/assets/effort.svg";
-import EmptyState from "../Common/EmptyState";
+import focus from '@/assets/focus.svg';
+import stress from '@/assets/stress.svg';
+import effort from '@/assets/effort.svg';
+import EmptyState from '../Common/EmptyState';
 
 const icons: Record<string, string> = {
   focus,
@@ -13,14 +13,14 @@ const icons: Record<string, string> = {
 
 interface MetricDataStatsProps {
   title: string;
-  value: number;
+  value?: number | null;
 }
 
 const MetricSingle: React.FC<MetricDataStatsProps> = ({ title, value }) => {
   const iconSrc = icons[title];
 
   const getTooltipContent = (title: string) => {
-    if (title === "focus") {
+    if (title === 'focus') {
       return (
         <>
           <h4 className="font-semibold mb-2">The Focus Metric</h4>
@@ -50,7 +50,7 @@ const MetricSingle: React.FC<MetricDataStatsProps> = ({ title, value }) => {
           </p>
         </>
       );
-    } else if (title === "stress") {
+    } else if (title === 'stress') {
       return (
         <>
           <h4 className="font-semibold mb-2">The Cognitive Stress Metric</h4>
@@ -101,7 +101,7 @@ const MetricSingle: React.FC<MetricDataStatsProps> = ({ title, value }) => {
           </p>
         </>
       );
-    } else if (title === "effort") {
+    } else if (title === 'effort') {
       return (
         <>
           <h4 className="font-semibold mb-2">The Mental Effort Metric</h4>
@@ -137,20 +137,33 @@ const MetricSingle: React.FC<MetricDataStatsProps> = ({ title, value }) => {
     );
   };
 
+  /*  if (loading) {
+    // skeleton loader
+    return (
+      <div className="flex flex-row mb-4 xsm:mb-0 p-4 2xl:px-8 2xl:py-4 flex-grow relative flex-wrap gap-2 3xl:items-center pr-6 pt-2 bg-white rounded-lg shadow-default">
+        <div className="w-10 3xl:w-16 h-10 3xl:h-16 bg-gray-200 rounded-full animate-pulse" />
+
+        <div className="rounded-md pb-2 ml-4 sm:ml-0 2xl:ml-0 flex-1">
+          <div className="h-6 bg-gray-200 rounded w-24 mb-2 animate-pulse"></div>
+
+          <div className="h-10 bg-gray-200 rounded w-32 animate-pulse"></div>
+        </div>
+      </div>
+    );
+  } */
+
   return (
     <div className="flex flex-row mb-4 xsm:mb-0 p-4 2xl:px-8 2xl:py-4 flex-grow relative flex-wrap gap-2 3xl:items-center pr-6 pt-2">
-      <img src={iconSrc} className="w-10 3xl:w-16" alt={`${title} icon`} />
+      <img src={iconSrc} className="w-10 " alt={`${title} icon`} />
       <div className="rounded-md pb-2 ml-4 sm:ml-0 2xl:ml-0">
         <CardHeader title={title} tooltip={getTooltipContent(title)} />
 
         {value === null || value === 0 ? (
           <EmptyState survey={false} />
         ) : (
-          <p className="text-3xl font-bold text-title 3xl:text-title-xxl">
+          <p className="text-3xl font-bold text-title">
             {value}
-            <span className="text-sm text-slate-600 mr-4 3xl:text-lg">
-              % avg.
-            </span>
+            <span className="text-sm text-slate-600 mr-4 ">% avg.</span>
           </p>
         )}
       </div>

@@ -3,6 +3,29 @@ export interface Department {
   name: string;
   dailyMetricsHistory?: metricHistory[];
   weeklyMetricsHistory?: metricHistory[];
+  enps: {
+    detractors: number;
+    passives: number;
+    promoters: number;
+    score: number;
+  };
+  health_contributors: {
+    energy: number;
+    workload: number;
+    confidence: number;
+    mood: number;
+  };
+  life_satisfactory: {
+    score: number;
+  };
+  metrics: {
+    calm: number;
+    cognitiveEffort: number;
+    focus: number;
+  };
+  wellbeing: {
+    score: number;
+  };
 }
 export interface CreateDepartmentRequest {
   name: string;
@@ -11,7 +34,6 @@ export interface CreateDepartmentRequest {
 export interface Company {
   id: string;
   name: string;
-  logo: string;
   address?: string | null;
   supportEmail?: string;
   cvr?: string;
@@ -56,7 +78,6 @@ export interface CreateCompanyResponse {
 export interface SimplifiedCompany {
   id: string;
   name: string;
-  logo: string;
   departments: Department[];
 }
 
